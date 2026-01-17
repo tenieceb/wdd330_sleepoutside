@@ -21,7 +21,7 @@ export default class ProductDetails {
 
   addProductToCart() {
     const cartItems = getLocalStorage('so-cart') || []
-    cartItems.push(product), 
+    cartItems.push(this.product), 
     setLocalStorage('so-cart', cartItems)
   }
 
@@ -38,7 +38,7 @@ renderProductDetails() {
     productImage.src = product.Image;
     productImage.alt = product.NameWithoutBrand;
 
-    document.getElementById('productPrice').textContent = product.FinalPrice;
+    document.getElementById('productPrice').textContent = product.NameWithoutBrand;
     document.getElementById('productColor').textContent = product.Colors[0].ColorName;
     document.getElementById('productDesc').innerHTML = product.DescriptionHtmlSimple;
 
