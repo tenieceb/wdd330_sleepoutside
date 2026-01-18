@@ -183,6 +183,29 @@ button {
   margin: 0.5em 0;
 }
 
+.tent-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.tent-card {
+  border: 1px solid #ddd;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.tent-card img {
+  width: 100%;
+  height: auto;
+}
+
+.price {
+  font-weight: bold;
+  color: #2a7c6f;
+  font-size: 1.2rem;
+}
+
 .card__brand {
   font-size: var(--small-font);
 }
