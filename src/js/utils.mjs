@@ -56,11 +56,11 @@ export async function loadTemplate(path){
 }
 
 export async function loadHeaderFooter(){
-  const headerTemplate = await loadTemplate('../partials/header.html')
+  const headerTemplate = await loadTemplate('/partials/header.html')
   const headerElement = qs("#dyn_header")
   renderWithTemplate(headerTemplate, headerElement);
 
-  const footerTemplate = await loadTemplate('../partials/footer.html')
+  const footerTemplate = await loadTemplate('/partials/footer.html')
   const footerElement = qs("#dyn_footer")
   renderWithTemplate(footerTemplate, footerElement);
 }

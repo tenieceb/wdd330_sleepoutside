@@ -19,15 +19,19 @@ export default class ProductDetails {
     .addEventListener('click', this.addToCartHandler.bind(this));
   };
 
-  addProductToCart() {
-    const cartItems = getLocalStorage('so-cart') || []
-    cartItems.push(this.product), 
-    setLocalStorage('so-cart', cartItems)
-  }
-
-  addToCartHandler() {
-    this.addProductToCart();
+addProductToCart() {
+  const cartItems = getLocalStorage('so-cart') || [];
+  console.log('Before adding, cart items:', cartItems);
+  cartItems.push(this.product);
+  setLocalStorage('so-cart', cartItems);
+  console.log('After adding, cart items:', getLocalStorage('so-cart'));
 }
+
+addToCartHandler() {
+  console.log('Add to Cart clicked!');
+  this.addProductToCart();
+}
+
 
 renderProductDetails() {
     const product = this.product;
@@ -35,11 +39,11 @@ renderProductDetails() {
     document.querySelector('h3').textContent = product.NameWithoutBrand;
 
     const productImage = document.getElementById('productImage');
-    productImage.src = product.Image;
+    productImage.src = product.Images?.PrimaryLarge || '/images/default-large.jpg';
     productImage.alt = product.NameWithoutBrand;
 
-    document.getElementById('productPrice').textContent = product.NameWithoutBrand;
-    document.getElementById('productColor').textContent = product.Colors[0].ColorName;
+    document.getElementById('productPrice').textContent = document.getElementById('productPrice').textContent = `$${product.FinalPrice.toFixed(2)}`;;
+    document.getElementById('productColor').textContent = product.Colors[0].ColorName||'N/A';
     document.getElementById('productDesc').innerHTML = product.DescriptionHtmlSimple;
 
     document.getElementById('addToCart').dataset.id = product.Id;
