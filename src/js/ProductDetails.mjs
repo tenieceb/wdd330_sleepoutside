@@ -46,5 +46,29 @@ renderProductDetails() {
     document.getElementById('productColor').textContent = product.Colors[0].ColorName||'N/A';
     document.getElementById('productDesc').innerHTML = product.DescriptionHtmlSimple;
 
+    const msrpEl = document.getElementById('productMSRP');
+const priceEl = document.getElementById('productPrice');
+const discountEl = document.getElementById('productDiscount');
+
+priceEl.textContent = `$${product.FinalPrice.toFixed(2)}`;
+
+if (
+  product.SuggestedRetailPrice &&
+  product.SuggestedRetailPrice > product.FinalPrice
+) {
+  msrpEl.textContent = `$${product.SuggestedRetailPrice.toFixed(2)}`;
+
+  const savings = product.SuggestedRetailPrice - product.FinalPrice;
+  const percentOff = Math.round(
+    (savings / product.SuggestedRetailPrice) * 100
+  );
+
+  discountEl.textContent = `Save $${savings.toFixed(2)} (${percentOff}% off)`;
+} else {
+  msrpEl.textContent = '';
+  discountEl.textContent = '';
+}
+
+
     document.getElementById('addToCart').dataset.id = product.Id;
 }}

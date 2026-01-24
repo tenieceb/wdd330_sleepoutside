@@ -1,6 +1,6 @@
 import { getLocalStorage, loadHeaderFooter } from './utils.mjs'
 
-loadHeaderFooter();
+loadHeaderFooter()
 
 function renderCartContents() {
   const cartItems = getLocalStorage('so-cart')
@@ -19,7 +19,21 @@ function cartItemTemplate(item) {
   const imgSrc = item.Images?.PrimaryMedium || '/images/default-thumb.jpg';
   const name = item.NameWithoutBrand || 'Unknown Product';
   const color = item.Colors?.[0]?.ColorName || 'N/A';
-  const price = item.FinalPrice?.toFixed(2) || '0.00';
+  const finalPrice = item.FinalPrice ?? 0;
+  const msrp = item.SuggestedRetailPrice ?? null;
+
+  let msrpHtml = '';
+  let discountHtml = '';
+
+  if (msrp && msrp > finalPrice) {
+    const savings = msrp - finalPrice;
+    const percentOff = Math.round((savings / msrp) * 100);
+
+    msrpHtml = `<p class="cart-card__msrp">$${msrp.toFixed(2)}</p>`;
+    discountHtml = `<p class="cart-card__discount">
+      Save $${savings.toFixed(2)} (${percentOff}% off)
+    </p>`;
+  }
 
   return `<li class="cart-card divider">
     <a href="#" class="cart-card__image">
@@ -30,7 +44,10 @@ function cartItemTemplate(item) {
     </a>
     <p class="cart-card__color">${color}</p>
     <p class="cart-card__quantity">qty: 1</p>
-    <p class="cart-card__price">$${price}</p>
+
+    ${msrpHtml}
+    <p class="cart-card__price">$${finalPrice.toFixed(2)}</p>
+    ${discountHtml}
   </li>`;
 }
 
