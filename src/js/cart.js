@@ -16,23 +16,23 @@ function renderCartContents() {
 }
 
 function cartItemTemplate(item) {
-  const imgSrc = item.Images?.PrimaryMedium || '/images/default-thumb.jpg';
-  const name = item.NameWithoutBrand || 'Unknown Product';
-  const color = item.Colors?.[0]?.ColorName || 'N/A';
-  const finalPrice = item.FinalPrice ?? 0;
-  const msrp = item.SuggestedRetailPrice ?? null;
+  const imgSrc = item.Images?.PrimaryMedium || '/images/default-thumb.jpg'
+  const name = item.NameWithoutBrand || 'Unknown Product'
+  const color = item.Colors?.[0]?.ColorName || 'N/A'
+  const finalPrice = item.FinalPrice ?? 0
+  const msrp = item.SuggestedRetailPrice ?? null
 
-  let msrpHtml = '';
-  let discountHtml = '';
+  let msrpHtml = ''
+  let discountHtml = ''
 
   if (msrp && msrp > finalPrice) {
-    const savings = msrp - finalPrice;
-    const percentOff = Math.round((savings / msrp) * 100);
+    const savings = msrp - finalPrice
+    const percentOff = Math.round((savings / msrp) * 100)
 
-    msrpHtml = `<p class="cart-card__msrp">$${msrp.toFixed(2)}</p>`;
+    msrpHtml = `<p class="cart-card__msrp">$${msrp.toFixed(2)}</p>`
     discountHtml = `<p class="cart-card__discount">
       Save $${savings.toFixed(2)} (${percentOff}% off)
-    </p>`;
+    </p>`
   }
 
   return `<li class="cart-card divider">
@@ -48,8 +48,7 @@ function cartItemTemplate(item) {
     ${msrpHtml}
     <p class="cart-card__price">$${finalPrice.toFixed(2)}</p>
     ${discountHtml}
-  </li>`;
+  </li>`
 }
-
 
 renderCartContents()

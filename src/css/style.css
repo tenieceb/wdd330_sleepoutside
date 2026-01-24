@@ -276,7 +276,6 @@ button {
   font-size: var(--small-font);
 }
 
-
 @media screen and (min-width: 500px) {
   body {
     max-width: 1080px;
