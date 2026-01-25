@@ -1,4 +1,7 @@
-const baseURL = import.meta.env.VITE_SERVER_URL;
+const baseURL =
+  import.meta.env?.VITE_SERVER_URL ||
+  'https://byui-cse.github.io/cse341-course/';
+
 function convertToJson(res) {
   if (res.ok) {
     return res.json();
@@ -8,18 +11,19 @@ function convertToJson(res) {
 }
 
 export default class ProductData {
-  constructor(baseURL = import.meta.env.VITE_SERVER_URL) {
-    this.baseURL = baseURL;
+  constructor(baseURLParam) {
+    this.baseURL = baseURLParam || baseURL;
   }
 
   async getData(category) {
-    const response = await fetch(`${this.baseURL}products/search/${category}`);
+    const response = await fetch(
+      `${this.baseURL}products/search/${category}`
+    );
     const data = await convertToJson(response);
     return data.Result;
   }
 
   async findProductById(id) {
-    // Fetch single product directly by id:
     const response = await fetch(`${this.baseURL}product/${id}`);
     if (!response.ok) {
       throw new Error(`Product with id ${id} not found`);
@@ -28,4 +32,3 @@ export default class ProductData {
     return product.Result;
   }
 }
-
