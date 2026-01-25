@@ -1,19 +1,19 @@
-import { defineConfig } from 'vite';
-import { resolve } from 'path';
+import { resolve } from 'path'
+import { defineConfig } from 'vite'
 
 export default defineConfig({
-  root: 'src', // <-- set the project root to src
+  root: 'src/',
+
   build: {
-    outDir: "../dist", // <-- output folder at project root
-    emptyOutDir: true,
+    outDir: '../dist',
     rollupOptions: {
       input: {
-        main: resolve(__dirname, "src/index.html"),
-        cart: resolve(__dirname, "src/cart/index.html"),
-        checkout: resolve(__dirname, "src/checkout/index.html"),
-        product: resolve(__dirname, "src/product_pages/index.html")
-      }
-    }
-  }
-});
-
+        main: resolve(__dirname, 'src/index.html'),
+        cart: resolve(__dirname, 'src/cart/index.html'),
+        checkout: resolve(__dirname, 'src/checkout/index.html'),
+        product: resolve(__dirname, 'src/product_pages/index.html'),
+        product_listing: resolve(__dirname, 'src/product_listing/index.html'),
+      },
+    },
+  },
+})
