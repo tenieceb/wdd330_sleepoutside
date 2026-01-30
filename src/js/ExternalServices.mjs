@@ -10,7 +10,7 @@ function convertToJson(res) {
   }
 }
 
-export default class ProductData {
+export default class ExternalServices {
   constructor(baseURLParam) {
     this.baseURL = baseURLParam || baseURL;
   }
