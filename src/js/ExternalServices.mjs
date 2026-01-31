@@ -10,7 +10,7 @@ function convertToJson(res) {
   }
 }
 
-export default class ProductData {
+export default class ExternalServices {
   constructor(baseURLParam) {
     this.baseURL = baseURLParam || baseURL;
   }
@@ -31,4 +31,19 @@ export default class ProductData {
     const product = await convertToJson(response);
     return product.Result;
   }
+
+  async submitOrder(orderData) {
+    console.log("Sending order JSON:", JSON.stringify(orderData));
+  const response = await fetch(`${this.baseURL}checkout`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(orderData),
+  });
+  if (!response.ok) {
+    throw new Error('Failed to submit order');
+  }
+  const data = await convertToJson(response);
+  return data;
+  }
 }
+

@@ -2,7 +2,7 @@ import { getLocalStorage, loadHeaderFooter } from './utils.mjs'
 
 loadHeaderFooter()
 
-function renderCartContents() {
+export function renderCartContents() {
   const cartItems = getLocalStorage('so-cart')
 
   if (!cartItems || !Array.isArray(cartItems) || cartItems.length === 0) {
