@@ -5,15 +5,30 @@ loadHeaderFooter()
 export function renderCartContents() {
   const cartItems = getLocalStorage('so-cart')
 
+  const cartFooter = document.querySelector('.cart-footer')
+  const cartTotalElem = document.querySelector('.cart-total')
+
   if (!cartItems || !Array.isArray(cartItems) || cartItems.length === 0) {
     document.querySelector('.product-list').innerHTML =
       '<p>Your cart is empty.</p>'
+    if (cartFooter) cartFooter.classList.add('hide')
     return
   }
 
+  // Render cart items
   const htmlItems = cartItems.map((item) => cartItemTemplate(item))
   document.querySelector('.product-list').innerHTML = htmlItems.join('')
+
+  // Calculate total price
+  const total = cartItems.reduce((sum, item) => sum + (item.FinalPrice ?? 0), 0)
+
+  // Show total and unhide footer container
+  if (cartTotalElem && cartFooter) {
+    cartTotalElem.textContent = `Total: $${total.toFixed(2)}`
+    cartFooter.classList.remove('hide')
+  }
 }
+
 
 function cartItemTemplate(item) {
   const imgSrc = item.Images?.PrimaryMedium || '/images/default-thumb.jpg'
