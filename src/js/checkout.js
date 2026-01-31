@@ -9,6 +9,10 @@ document.addEventListener('DOMContentLoaded', () => {
   subtotalDisplay.innerText = `Subtotal: $${subtotal}`
   checkout.initZipListener()
   renderCartContents()
+
+  checkout.form.addEventListener('submit', async (event) => {
+    await checkout.checkout(event)
+  })
 })
 
 loadHeaderFooter()

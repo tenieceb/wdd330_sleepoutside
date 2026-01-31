@@ -1,4 +1,5 @@
 import { getLocalStorage } from "./utils.mjs";
+import ExternalServices from "./ExternalServices.mjs";
 
 function displayOrderSummaryTemplate(subtotal, tax, shipping, total) {
   return `
@@ -61,14 +62,61 @@ export default class CheckoutProcess {
       name: item.Name,
       price: item.FinalPrice,
       quantity: item.Quantity || 1
-  }));}
+  }))}
 
 
-  async checkout(form) {
-  // get the form element data by the form name
-  // convert the form data to a JSON order object using the formDataToJSON function
-  // populate the JSON order object with the order Date, orderTotal, tax, shipping, and list of items
-  // call the checkout method in the ExternalServices module and send it the JSON order data.
+  async checkout(event) {
+    event.preventDefault(); // prevent the default form submission behavior from the webservice
+
+    // get the form element data by the form name which is already stored in this.form
+    // convert the form data to a JSON order object using the formDataToJSON function
+    const formData = formDataToJSON(this.form);
+    const subtotal = this.handleSubtotal();
+    const { tax, shipping } = this.handleTaxShipping(subtotal);
+    const orderTotal = subtotal + tax + shipping;
+    // get the cart items from local storage
+    const cartItems = getLocalStorage('so-cart') || [];
+    const packagedItems = this.packageItems(cartItems);
+    // populate the JSON order object with the order Date, orderTotal, tax, shipping, and list of items
+    const cleanCardNumber = formData.cardNumber? formData.cardNumber.replace(/\D/g, ''): '1234123412341234';
+    let exp = formData.expiration || '1/30';
+    if (exp.startsWith('0')) {
+      exp = exp.slice(1); // remove leading zero
+    }
+
+    const orderData = {
+      orderDate: new Date().toISOString(),
+      fname: formData.fname || 'Jane',
+      lname: formData.lname || 'Doe',
+      street: formData.street || '123 street',
+      city: formData.city || 'city',
+      state: formData.state || 'ID',
+      zip: formData.zip || '00000',
+      cardNumber: cleanCardNumber,
+      expiration: formData.expiration || '1/30',
+      code: formData.code || '123',
+      items: packagedItems,
+      orderTotal: parseFloat(orderTotal.toFixed(2)),
+      tax: parseFloat(tax.toFixed(2)),
+      shipping: parseFloat(shipping.toFixed(2))
+    };
+
+
+    
+
+      console.log('Sending order data:', orderData);
+
+    // call the checkout method in the ExternalServices module and send it the JSON order data.
+     const externalService = new ExternalServices();
+
+    try {
+      const result = await externalService.submitOrder(orderData);
+      console.log("Order submitted successfully:", result);
+      // You can also update UI here to show success message or redirect
+    } catch (error) {
+      console.error("Error submitting order:", error);
+      // Show error message to user
+    }
 }
 }
 
