@@ -32,3 +32,4 @@ export default class ExternalServices {
     return product.Result;
   }
 }
+

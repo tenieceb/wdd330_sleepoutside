@@ -15,11 +15,11 @@ export default class CheckoutProcess {
   }
 
   initZipListener(){
-        const zipInput = document.getElementById('zip');
+        const zipInput = document.querySelector('#zip');
 
         zipInput.addEventListener('blur', async () => {
-            const subtotal = await this.handleSubtotal();
-            const { tax, shipping } = await this.handleTaxShipping(subtotal);
+            const subtotal = this.handleSubtotal();
+            const { tax, shipping } = this.handleTaxShipping(subtotal);
             const total = subtotal + tax + shipping;
             this.displayOrderSummary(subtotal, tax, shipping, total);
         });
@@ -38,7 +38,7 @@ export default class CheckoutProcess {
 
 // Tax: Use 6% sales tax on the subtotal amount.
 // Shipping: Use $10 for the first item plus $2 for each additional item after that.
-  async handleTaxShipping(subtotal) {
+  handleTaxShipping(subtotal) {
     const taxRate = 0.06;
     const cartItems = getLocalStorage('so-cart')
     // itemCount will be updated once quantity logic is implemented
@@ -49,14 +49,14 @@ export default class CheckoutProcess {
   }
 
   displayOrderSummary(subtotal, tax, shipping, total) {
-    const summaryContainer = document.getElementById('dyn_order_info');
+    const summaryContainer = document.querySelector('#dyn_order_info');
     summaryContainer.innerHTML = displayOrderSummaryTemplate(subtotal, tax, shipping, total);
   }
   // takes the items currently stored in the cart (localstorage) and returns them in a simplified form.
-  packageItems(items) {
+  packageItems(cartItems) {
     // convert the list of products from localStorage to the simpler form required for the checkout process.
     // An Array.map would be perfect for this process.
-    return items.map(item => ({
+    return cartItems.map(item => ({
       id: item.Id,
       name: item.Name,
       price: item.FinalPrice,
