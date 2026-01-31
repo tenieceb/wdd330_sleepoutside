@@ -112,10 +112,11 @@ export default class CheckoutProcess {
     try {
       const result = await externalService.submitOrder(orderData);
       console.log("Order submitted successfully:", result);
+      alert("Order submitted successfully!");
       // You can also update UI here to show success message or redirect
     } catch (error) {
       console.error("Error submitting order:", error);
-      // Show error message to user
+      alert("Error submitting order. Please try again.");
     }
 }
 }
