@@ -9,6 +9,7 @@
     <title>Sleep Outside | Checkout</title>
 
     <link rel="stylesheet" href="css/style.css" />
+     <script type="module" src="./checkout.js"></script>
   </head>
 
   <body>
@@ -55,6 +56,7 @@
         </a>
       </div>
     </header>
+    
 
     <main class="divider">
       <section class="products">
@@ -62,6 +64,80 @@
       </section>
     </main>
 
+    <form id="checkout-form">
+  <fieldset>
+    <legend>Customer Information</legend>
+
+    <label>
+      First Name
+      <input type="text" name="firstName" required />
+    </label>
+
+    <label>
+      Last Name
+      <input type="text" name="lastName" required />
+    </label>
+
+    <label>
+      Street Address
+      <input type="text" name="street" required />
+    </label>
+
+    <label>
+      City
+      <input type="text" name="city" required />
+    </label>
+
+    <label>
+      State
+      <input type="text" name="state" required />
+    </label>
+
+    <label>
+      Zip Code
+      <input type="text" name="zip" id="zip" required />
+    </label>
+  </fieldset>
+
+  <fieldset>
+    <legend>Payment</legend>
+
+    <label>
+      Credit Card Number
+      <input type="text" name="cardNumber" required />
+    </label>
+
+    <label>
+      Expiration Date
+      <input type="text" name="expiration" placeholder="MM/YY" required />
+    </label>
+
+    <label>
+      Security Code
+      <input type="text" name="securityCode" required />
+    </label>
+  </fieldset>
+
+  <button type="submit">Place Order</button>
+</form>
+
+<section class="order-summary">
+  <h2>Order Summary</h2>
+
+  <p>Items: <span id="item-count">0</span></p>
+  <p>Subtotal: <span id="subtotal">$0.00</span></p>
+  <p>Tax: <span id="tax">$0.00</span></p>
+  <p>Shipping: <span id="shipping">$0.00</span></p>
+  <p><strong>Total: <span id="order-total">$0.00</span></strong></p>
+</section>
+
     <footer>&copy;NOT a real business</footer>
   </body>
 </html>
+
+
+
+
+
+
+
