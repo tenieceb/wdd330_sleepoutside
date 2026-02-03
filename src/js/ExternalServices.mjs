@@ -25,6 +25,20 @@ export async function submitOrder(order) {
     }
   );
 
+  async function convertToJson(res) {
+  const jsonResponse = await res.json();
+
+  if (res.ok) {
+    return jsonResponse;
+  } else {
+    // send server error details forward
+    throw {
+      name: 'servicesError',
+      message: jsonResponse
+    };
+  }
+}
+
   if (!response.ok) {
     throw new Error("Order submission failed");
   }
