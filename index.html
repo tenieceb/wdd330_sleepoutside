@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Movie Tracker</title>
+
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: #f4f6f9;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    .container {
+      width: 600px;
+      margin-top: 40px;
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 25px;
+    }
+
+    .form-group {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    input, select {
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      flex: 1;
+    }
+
+    button {
+      padding: 8px 12px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      background-color: #4CAF50;
+      color: white;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      background: #f9f9f9;
+      padding: 12px;
+      margin-bottom: 10px;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .movie-info {
+      font-size: 14px;
+    }
+
+    .delete-btn {
+      background-color: #e74c3c;
+    }
+
+    .delete-btn:hover {
+      background-color: #c0392b;
+    }
+
+    .status {
+      font-weight: bold;
+      margin-left: 5px;
+    }
+
+    .rating {
+      color: #f39c12;
+      margin-left: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>🎬 Movie Tracker</h1>
+
+    <div class="form-group">
+      <input id="title" placeholder="Movie Title" />
+
+      <select id="status">
+        <option>Watched</option>
+        <option>Watching</option>
+        <option>Wishlist</option>
+      </select>
+
+      <input
+        id="rating"
+        type="number"
+        min="1"
+        max="5"
+        placeholder="Rating"
+      />
+
+      <button id="addBtn">Add</button>
+    </div>
+
+    <ul id="movieList"></ul>
+  </div>
+
+  <!-- Vite Module Script -->
+  <script type="module" src="/src/js/movieTracker.js"></script>
+</body>
+</html>

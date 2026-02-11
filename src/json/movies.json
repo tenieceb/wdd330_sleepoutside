@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "title": "Inception",
+    "status": "Watched",
+    "rating": 5
+  },
+  {
+    "id": 2,
+    "title": "Interstellar",
+    "status": "Wishlist",
+    "rating": 0
+  }
+]
