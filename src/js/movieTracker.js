@@ -1,81 +1,111 @@
-let movies = [];
-const movieList = document.getElementById("movieList");
-const addBtn = document.getElementById("addBtn");
+class Movie {
+  constructor(id, title, status, rating) {
+    this.id = id;
+    this.title = title;
+    this.status = status;
+    this.rating = rating;
+  }
+}
 
-// Load movies from localStorage or JSON
-async function init() {
-  const stored = localStorage.getItem("movies");
-
-  if (stored) {
-    movies = JSON.parse(stored);
-  } else {
-    const response = await fetch("/src/json/movies.json");
-    movies = await response.json();
-    saveMovies();
+class MovieTracker {
+  constructor() {
+    this.movies = [];
+    this.filter = "All";
+    this.editId = null;
+    this.listElement = document.getElementById("movieList");
+    this.init();
   }
 
-  displayMovies();
+  async init() {
+    const stored = localStorage.getItem("movies");
+    if (stored) {
+      this.movies = JSON.parse(stored);
+    } else {
+      const res = await fetch("/src/json/movies.json");
+      this.movies = await res.json();
+      this.save();
+    }
+    this.render();
+  }
+
+  save() {
+    localStorage.setItem("movies", JSON.stringify(this.movies));
+  }
+
+  addOrUpdate(title, status, rating) {
+    if (this.editId) {
+      const movie = this.movies.find(m => m.id === this.editId);
+      movie.title = title;
+      movie.status = status;
+      movie.rating = rating;
+      this.editId = null;
+    } else {
+      this.movies.push(
+        new Movie(Date.now(), title, status, rating)
+      );
+    }
+    this.save();
+    this.render();
+  }
+
+  delete(id) {
+    this.movies = this.movies.filter(m => m.id !== id);
+    this.save();
+    this.render();
+  }
+
+  edit(movie) {
+    document.getElementById("title").value = movie.title;
+    document.getElementById("status").value = movie.status;
+    document.getElementById("rating").value = movie.rating;
+    this.editId = movie.id;
+  }
+
+  setFilter(value) {
+    this.filter = value;
+    this.render();
+  }
+
+  render() {
+    this.listElement.innerHTML = "";
+
+    const filtered =
+      this.filter === "All"
+        ? this.movies
+        : this.movies.filter(m => m.status === this.filter);
+
+    filtered.forEach(movie => {
+      const li = document.createElement("li");
+
+      li.innerHTML = `
+        <div class="movie-info">
+          <strong>${movie.title}</strong><br>
+          ${movie.status} | ⭐ ${movie.rating || "N/A"}
+        </div>
+        <div class="actions">
+          <button onclick="tracker.edit(${JSON.stringify(movie).replace(/"/g, '&quot;')})">Edit</button>
+          <button class="delete" onclick="tracker.delete(${movie.id})">Delete</button>
+        </div>
+      `;
+
+      this.listElement.appendChild(li);
+    });
+  }
 }
 
-function saveMovies() {
-  localStorage.setItem("movies", JSON.stringify(movies));
-}
+const tracker = new MovieTracker();
 
-function displayMovies() {
-  movieList.innerHTML = "";
-
-  movies.forEach(movie => {
-    const li = document.createElement("li");
-
-    li.innerHTML = `
-      <strong>${movie.title}</strong> 
-      (${movie.status}) 
-      ⭐ ${movie.rating || "N/A"}
-      <button data-id="${movie.id}" class="deleteBtn">Delete</button>
-    `;
-
-    movieList.appendChild(li);
-  });
-
-  addDeleteEvents();
-}
-
-function addMovie() {
-  const title = document.getElementById("title").value;
+document.getElementById("addBtn").addEventListener("click", () => {
+  const title = document.getElementById("title").value.trim();
   const status = document.getElementById("status").value;
   const rating = document.getElementById("rating").value;
 
   if (!title) return;
 
-  const newMovie = {
-    id: Date.now(),
-    title,
-    status,
-    rating
-  };
-
-  movies.push(newMovie);
-  saveMovies();
-  displayMovies();
+  tracker.addOrUpdate(title, status, rating);
 
   document.getElementById("title").value = "";
   document.getElementById("rating").value = "";
-}
+});
 
-function deleteMovie(id) {
-  movies = movies.filter(movie => movie.id != id);
-  saveMovies();
-  displayMovies();
-}
-
-function addDeleteEvents() {
-  document.querySelectorAll(".deleteBtn").forEach(btn => {
-    btn.addEventListener("click", (e) => {
-      deleteMovie(e.target.dataset.id);
-    });
-  });
-}
-
-addBtn.addEventListener("click", addMovie);
-
-init();
+window.setFilter = (value) => tracker.setFilter(value);

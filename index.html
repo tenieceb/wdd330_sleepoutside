@@ -7,8 +7,8 @@
 
   <style>
     body {
-      font-family: Arial, Helvetica, sans-serif;
-      background-color: #f4f6f9;
+      font-family: system-ui, Arial, sans-serif;
+      background-color: #f5f7fa;
       margin: 0;
       padding: 0;
       display: flex;
@@ -16,45 +16,44 @@
     }
 
     .container {
-      width: 600px;
-      margin-top: 40px;
-      background: white;
+      width: 650px;
+      margin: 40px auto;
+      background: #ffffff;
       padding: 25px;
       border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
     }
 
     h1 {
       text-align: center;
-      color: #333;
-      margin-bottom: 25px;
+      margin-bottom: 20px;
     }
 
-    .form-group {
+    .form-group,
+    .filter-group {
       display: flex;
       gap: 10px;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
     }
 
     input, select {
       padding: 8px;
-      border: 1px solid #ccc;
       border-radius: 6px;
+      border: 1px solid #ccc;
       flex: 1;
     }
 
     button {
-      padding: 8px 12px;
       border: none;
       border-radius: 6px;
+      padding: 8px 12px;
       cursor: pointer;
-      background-color: #4CAF50;
+      background-color: #1976d2;
       color: white;
-      transition: 0.2s;
     }
 
     button:hover {
-      background-color: #45a049;
+      background-color: #125aa0;
     }
 
     ul {
@@ -76,22 +75,17 @@
       font-size: 14px;
     }
 
-    .delete-btn {
-      background-color: #e74c3c;
-    }
-
-    .delete-btn:hover {
-      background-color: #c0392b;
-    }
-
-    .status {
-      font-weight: bold;
+    .actions button {
       margin-left: 5px;
+      background-color: #555;
     }
 
-    .rating {
-      color: #f39c12;
-      margin-left: 5px;
+    .actions button.delete {
+      background-color: #d32f2f;
+    }
+
+    .actions button:hover {
+      opacity: 0.9;
     }
   </style>
 </head>
@@ -101,29 +95,26 @@
     <h1>🎬 Movie Tracker</h1>
 
     <div class="form-group">
-      <input id="title" placeholder="Movie Title" />
-
+      <input id="title" placeholder="Movie title" />
       <select id="status">
         <option>Watched</option>
         <option>Watching</option>
         <option>Wishlist</option>
       </select>
+      <input id="rating" type="number" min="1" max="5" placeholder="Rating" />
+      <button id="addBtn">Save</button>
+    </div>
 
-      <input
-        id="rating"
-        type="number"
-        min="1"
-        max="5"
-        placeholder="Rating"
-      />
-
-      <button id="addBtn">Add</button>
+    <div class="filter-group">
+      <button onclick="setFilter('All')">All</button>
+      <button onclick="setFilter('Watched')">Watched</button>
+      <button onclick="setFilter('Watching')">Watching</button>
+      <button onclick="setFilter('Wishlist')">Wishlist</button>
     </div>
 
     <ul id="movieList"></ul>
   </div>
 
-  <!-- Vite Module Script -->
   <script type="module" src="/src/js/movieTracker.js"></script>
 </body>
 </html>
