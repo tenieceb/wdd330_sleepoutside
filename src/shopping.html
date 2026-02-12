@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shopping Tracker</title>
+
+  <style>
+    body {
+      font-family: system-ui, Arial, sans-serif;
+      background-color: #f4f6f9;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    .container {
+      width: 650px;
+      margin-top: 40px;
+      background: #ffffff;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .form-group,
+    .filter-group {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    input, select {
+      padding: 8px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      flex: 1;
+    }
+
+    button {
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      background-color: #1976d2;
+      color: white;
+    }
+
+    button:hover {
+      background-color: #125aa0;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      background: #f9f9f9;
+      padding: 12px;
+      margin-bottom: 10px;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .actions button {
+      margin-left: 5px;
+      background-color: #555;
+    }
+
+    .actions .delete {
+      background-color: #d32f2f;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>🛒 Shopping Tracker</h1>
+
+    <div class="form-group">
+      <input id="itemName" placeholder="Item name" />
+      <input id="quantity" type="number" min="1" placeholder="Qty" />
+      <select id="status">
+        <option>To Buy</option>
+        <option>Bought</option>
+        <option>Cancelled</option>
+      </select>
+      <button id="saveBtn">Save</button>
+    </div>
+
+    <div class="filter-group">
+      <button onclick="setFilter('All')">All</button>
+      <button onclick="setFilter('To Buy')">To Buy</button>
+      <button onclick="setFilter('Bought')">Bought</button>
+      <button onclick="setFilter('Cancelled')">Cancelled</button>
+    </div>
+
+    <ul id="itemList"></ul>
+  </div>
+
+  <!-- NOTE THE PATH: relative because index.html is in src -->
+  <script type="module" src="./js/shoppingTracker.js"></script>
+</body>
+</html>
