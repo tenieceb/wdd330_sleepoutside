@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shipping Tracker | SleepOutside</title>
+
+  <!-- Use your existing CSS -->
+  <link rel="stylesheet" href="../css/shippingTracker.css" />
+</head>
+<body>
+
+  <header>
+    <h1>SleepOutside Shipping Tracker</h1>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="../cart/">Cart</a>
+      <a href="../checkout/">Checkout</a>
+      <a href="./index.html">Track Shipment</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h2>Track Your Order</h2>
+
+    <form id="trackingForm">
+      <input type="text" id="orderId" placeholder="Order ID" required />
+      
+      <select id="carrier" required>
+        <option value="">Select Carrier</option>
+        <option value="UPS">UPS</option>
+        <option value="FedEx">FedEx</option>
+        <option value="DHL">DHL</option>
+        <option value="USPS">USPS</option>
+      </select>
+
+      <select id="status" required>
+        <option value="">Select Status</option>
+        <option value="Processing">Processing</option>
+        <option value="Shipped">Shipped</option>
+        <option value="In Transit">In Transit</option>
+        <option value="Delivered">Delivered</option>
+      </select>
+
+      <button type="submit">Add Shipment</button>
+    </form>
+
+    <section>
+      <h3>Shipment List</h3>
+      <div id="shipmentList"></div>
+    </section>
+  </main>
+
+  <script type="module" src="../js/shippingTracker.js"></script>
+</body>
+</html>
